@@ -1,0 +1,14 @@
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+@font-face{
+    font-family: "Undertale";
+    src: url('font/MonsterFriendBack.otf');
+}
+
+button{
+    size: 100000px;
+}

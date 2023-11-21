@@ -151,6 +151,3 @@ alert( user2[key] ); // John (si entré "name")
 
 alert( "age" in user2 ); // true, user.age existe
 alert( "blabla" in user2 ); // false, user.blabla n'existe pas
-
-//---------réference--------
-/*voici du 

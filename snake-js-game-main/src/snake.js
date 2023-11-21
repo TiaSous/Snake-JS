@@ -1,10 +1,8 @@
-
 export class PartOfSnake{
-    constructor(x, y, taille){
+    constructor(x, y){
         this.x = x;
         this.y = y;
-        this.heigth = taille;
-        this.width = taille;
+
     }
 
     getX(){
