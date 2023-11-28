@@ -32,16 +32,24 @@ let Apple = {
   y: tailleSerpent*5
 }
 
-let frame = 0;
-let userInputX = tailleSerpent;
+let frame = 0;                    //nombre de frame 
+let userInputX = tailleSerpent;   
 let userInputY = 0;
+let firstTime = true;
  
-Snake.part.push(new PartOfSnake(0, 0), new PartOfSnake(tailleSerpent, 0), new PartOfSnake(tailleSerpent*2, 0));      
+////////Début/////
+//rajoute 3 partie au snake
+Snake.part.push(new PartOfSnake(0, 0), new PartOfSnake(tailleSerpent, 0), new PartOfSnake(tailleSerpent*2, 0));    
 
-newApple()
+//écran de fin invisible
+document.getElementById('gameOver').style.display = 'none';
+
+//fait apparître une pomme
+newApple();
 
 //programme principale
 const move = () => { 
+
 
   // Dessine la grille de jeu
   ctx.fillStyle = 'black';
@@ -49,8 +57,9 @@ const move = () => {
   
   //va bouger le serpent
   if (frame == 50){
-    
-    death()
+    //s'il meurt
+    death();
+
     //mange la pomme
     if (Snake.x + userInputX == Apple.x && Snake.y + userInputY == Apple.y)
     {
@@ -58,6 +67,7 @@ const move = () => {
       Snake.x += userInputX;
       Snake.y += userInputY;
     }
+    //bouge de la case selon user input
     else
     {
       Snake.x += userInputX;
@@ -67,14 +77,35 @@ const move = () => {
     //dessine le serpent
     frame = 0;
   } 
+  //dessine
   Draw();
   drawApple();
   document.getElementById('score').innerHTML = score
-  frame++; 
-  if (mort == true)
+
+  //s'il meurt
+  if (mort)
   {
-    alert("hello")
+    //fait disparaitre écran jeu et fait apparaitre game over
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('gameOver').style.display = 'block';
+
+    //affiche différent écran
+    if(firstTime)
+    {
+      firstTime = false;
+      document.getElementById('gameOver').innerHTML = "Vous etes mort!";
+    }
+    
+    setTimeout(() => {
+      document.getElementById('gameOver').innerHTML = "Score : " + score;
+    }, 2000);
+
+    setTimeout(() => {
+      document.location.href="index.html"
+    }, 4000);
   }
+
+  frame++; 
 };
 
 setInterval(move, 1);
@@ -82,11 +113,9 @@ setInterval(move, 1);
 //dessine le serpent
 function Draw(){
   ctx.fillStyle = couleurSnake;
-  for(let i = 0; i < Snake.part.length; i++)
-  {
-    ctx.fillRect(Snake.part[i].getX(), Snake.part[i].getY(), tailleSerpent, tailleSerpent)
-  }
-  
+  Snake.part.forEach((element) => {
+    ctx.fillRect(element.getX(), element.getY(), tailleSerpent, tailleSerpent)
+  });
 }
 
 //fait bouger le serpent
@@ -119,18 +148,20 @@ window.addEventListener("keydown", (event) => {
   }
 })
 
+//dessine la pomme
 function drawApple(){
   ctx.fillStyle = 'red'
   ctx.fillRect(Apple.x, Apple.y, tailleSerpent, tailleSerpent)
 }
 
+//lorsque le joueur mange une pomme
 function addAppleInPart(){
   Snake.part.push(new PartOfSnake(Apple.x, Apple.y));
   newApple()
-  score++;
-  
+  score++; 
 }
 
+//nouvelle pomme
 function newApple(){
   let numberX;
   let numberY;
@@ -156,6 +187,7 @@ function newApple(){
   Apple.y = numberY*tailleSerpent
 }
 
+//contrôle si mort
 function death(){
   //s'il meurt
   if(Snake.x + userInputX < 0 || Snake.x + userInputX > 750|| Snake.y + userInputY < 0 || Snake.y + userInputY > 750)

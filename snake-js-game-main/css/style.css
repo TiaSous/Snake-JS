@@ -24,7 +24,7 @@ header{
   height: 9vh;
   background-color: rgb(255, 0, 0);
   display: flex;
-  justify-content: center;
+  justify-content:space-around;
   align-items: center;
   color: rgb(255, 255, 255);
   font-size: xx-large;
@@ -39,5 +39,12 @@ header{
 a{
   text-decoration: none;
   outline: none;
-  color: black;
+  color: white;
+}
+
+#gameOver{
+  width: 100%;
+  font-size: x-large;
+  color: rgb(255, 255, 255);
+  margin-top: 40vh;
 }

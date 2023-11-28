@@ -1,7 +1,10 @@
-
+*{
+    font-family: "Undertale" ;
+}
+    
 a{
     text-decoration: none;
-    color: black;
+    color: white;
 }
 
 @font-face{
@@ -9,6 +12,30 @@ a{
     src: url('font/MonsterFriendBack.otf');
 }
 
-button{
-    size: 100000px;
+body{
+    background-color: black;
+    color: white
+}
+
+header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1{
+    font-size: 10vh;
+}
+
+#buttonPlay{
+    height: 100px;
+    width: 200px;
+    font-size: x-large;
+}
+
+main{
+    display: flex;
+    height: 50vh;
+    align-items: center;
+    justify-content: center;
 }
