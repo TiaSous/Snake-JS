@@ -17,9 +17,6 @@ const couleurSnake = 'white'
 //variable score
 let score = 0;
 
-//variable mort
-let mort = false
-
 //objet serpent qui contient toutes les part
 let Snake = {
   part: [],
@@ -49,31 +46,22 @@ newApple();
 
 //programme principale
 const move = () => { 
-
-
   // Dessine la grille de jeu
   ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, 800, 800);
   
   //va bouger le serpent
-  if (frame == 50){
+  if (frame == 30){
     //s'il meurt
     death();
 
-    //mange la pomme
-    if (Snake.x + userInputX == Apple.x && Snake.y + userInputY == Apple.y)
-    {
-      addAppleInPart()
-      Snake.x += userInputX;
-      Snake.y += userInputY;
-    }
-    //bouge de la case selon user input
-    else
-    {
-      Snake.x += userInputX;
-      Snake.y += userInputY;
-      mouvementSnake(Snake.x, Snake.y)
-    }
+    //mange la pomme ou mouvement
+    Snake.x + userInputX == Apple.x && Snake.y + userInputY == Apple.y ? addAppleInPart() 
+    : mouvementSnake(Snake.x + userInputX, Snake.y + userInputY);
+    
+    Snake.x += userInputX;
+    Snake.y += userInputY;
+
     //dessine le serpent
     frame = 0;
   } 
@@ -81,29 +69,6 @@ const move = () => {
   Draw();
   drawApple();
   document.getElementById('score').innerHTML = score
-
-  //s'il meurt
-  if (mort)
-  {
-    //fait disparaitre écran jeu et fait apparaitre game over
-    document.getElementById('app').style.display = 'none';
-    document.getElementById('gameOver').style.display = 'block';
-
-    //affiche différent écran
-    if(firstTime)
-    {
-      firstTime = false;
-      document.getElementById('gameOver').innerHTML = "Vous etes mort!";
-    }
-    
-    setTimeout(() => {
-      document.getElementById('gameOver').innerHTML = "Score : " + score;
-    }, 2000);
-
-    setTimeout(() => {
-      document.location.href="index.html"
-    }, 4000);
-  }
 
   frame++; 
 };
@@ -157,7 +122,7 @@ function drawApple(){
 //lorsque le joueur mange une pomme
 function addAppleInPart(){
   Snake.part.push(new PartOfSnake(Apple.x, Apple.y));
-  newApple()
+  newApple();
   score++; 
 }
 
@@ -172,36 +137,42 @@ function newApple(){
     numberX = Math.floor(800/tailleSerpent * Math.random())
     numberY = Math.floor(800/tailleSerpent * Math.random())
     
-    for(let i = 0; i < Snake.part.length; i++)
+    if (Snake.part.some((n1) => (n1.getX() == numberX*tailleSerpent && numberY*tailleSerpent == n1.getY())))
     {
-      if ((numberX*tailleSerpent == Snake.part[i].getX() && numberY*tailleSerpent == Snake.part[i].getY()) || (numberX*tailleSerpent == Apple.x && numberY*tailleSerpent == Apple.y))
-      {
-        ok = false
-      }
+      ok=false;
+
     }
   
   }
-  while(ok == false)
+  while(!ok)
 
-  Apple.x = numberX *tailleSerpent
+  Apple.x = numberX*tailleSerpent
   Apple.y = numberY*tailleSerpent
 }
 
 //contrôle si mort
 function death(){
   //s'il meurt
-  if(Snake.x + userInputX < 0 || Snake.x + userInputX > 750|| Snake.y + userInputY < 0 || Snake.y + userInputY > 750)
+  if (Snake.x + userInputX < 0 || Snake.x + userInputX > 800 - tailleSerpent || Snake.y + userInputY < 0 || Snake.y + userInputY > 800 - tailleSerpent ||
+    Snake.part.some((n1) => (n1.getX() == Snake.x + userInputX && Snake.y + userInputY == n1.getY())))
   {
-    mort = true
-  }
-  else
-  {
-    for(let i = 0; i < Snake.part.length; i++)
+    //fait disparaitre écran jeu et fait apparaitre game over
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('gameOver').style.display = 'block';
+
+    //affiche différent écran
+    if(firstTime)
     {
-      if (Snake.x + userInputX == Snake.part[i].getX() && Snake.y + userInputY == Snake.part[i].getY())
-      {
-        mort = true;
-      }
+      firstTime = false;
+      document.getElementById('gameOver').innerHTML = "Vous etes mort!";
     }
+    
+    setTimeout(() => {
+      document.getElementById('gameOver').innerHTML = "Score : " + score;
+    }, 2000);
+
+    setTimeout(() => {
+      document.location.href="index.html"
+    }, 4000);
   }
 }

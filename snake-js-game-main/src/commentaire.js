@@ -64,6 +64,8 @@ alert( undefined == 0 ); // false (3)
 
 //------Opérateur ternaire ‘?’----------
 let accessAllowed = (age > 18) ? true : false;
+//si plusieur truc à faire alors mettre dans les ()
+mort = Snake.x + userInputX < 0 || Snake.x + userInputX > 800 - tailleSerpent || Snake.y + userInputY < 0 || Snake.y + userInputY > 800 - tailleSerpent ? (console.log("coucou"), console.log("comment"))
 
 //L’appel de l’alert ne renvoie pas de valeur. Ou, en d’autres termes, il retourne undefined
 
@@ -151,3 +153,4 @@ alert( user2[key] ); // John (si entré "name")
 
 alert( "age" in user2 ); // true, user.age existe
 alert( "blabla" in user2 ); // false, user.blabla n'existe pas
+

@@ -3,7 +3,6 @@ export class PartOfSnake{
         //l'endroit où il est
         this.x = x; 
         this.y = y;
-
     }
 
     getX(){
