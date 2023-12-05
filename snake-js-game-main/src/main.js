@@ -14,9 +14,6 @@ const right = 39;
 const tailleSerpent = 50;
 const couleurSnake = 'white'
 
-//variable score
-let score = 0;
-
 //objet serpent qui contient toutes les part
 let Snake = {
   part: [],
@@ -24,16 +21,19 @@ let Snake = {
   y:0,                       //y de la part qui est devant
 }
 
+//objet pomme
 let Apple = {
   x: tailleSerpent*5,
   y: tailleSerpent*5
 }
 
 let frame = 0;                    //nombre de frame 
-let userInputX = tailleSerpent;   
-let userInputY = 0;
-let firstTime = true;
- 
+let userInputX = tailleSerpent;   //direction serpent axe x, le serpent va automatiquement aller à droite
+let userInputY = 0;               //direction serpent axe y
+let firstTime = true;             //pour afficher les différents écran de fin
+let score = 0;                    //variable score
+
+
 ////////Début/////
 //rajoute 3 partie au snake
 Snake.part.push(new PartOfSnake(0, 0), new PartOfSnake(tailleSerpent, 0), new PartOfSnake(tailleSerpent*2, 0));    
@@ -131,18 +131,18 @@ function newApple(){
   let numberX;
   let numberY;
   let ok = true;
+
+  //contrôle si la pomme n'apparaît pas sur le serpent
   do
   {
-    ok = true
+    ok = true                                                     //varibale pour savoir si les nombré généré
     numberX = Math.floor(800/tailleSerpent * Math.random())
     numberY = Math.floor(800/tailleSerpent * Math.random())
     
     if (Snake.part.some((n1) => (n1.getX() == numberX*tailleSerpent && numberY*tailleSerpent == n1.getY())))
     {
       ok=false;
-
     }
-  
   }
   while(!ok)
 
@@ -154,7 +154,7 @@ function newApple(){
 function death(){
   //s'il meurt
   if (Snake.x + userInputX < 0 || Snake.x + userInputX > 800 - tailleSerpent || Snake.y + userInputY < 0 || Snake.y + userInputY > 800 - tailleSerpent ||
-    Snake.part.some((n1) => (n1.getX() == Snake.x + userInputX && Snake.y + userInputY == n1.getY())))
+      Snake.part.some((n1) => (n1.getX() == Snake.x + userInputX && Snake.y + userInputY == n1.getY())))
   {
     //fait disparaitre écran jeu et fait apparaitre game over
     document.getElementById('app').style.display = 'none';
@@ -176,3 +176,4 @@ function death(){
     }, 4000);
   }
 }
+
