@@ -4,11 +4,11 @@ import { PartOfSnake } from './snake';
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
-//code ascii des flèches
-const up = 38;
-const down = 40;
-const left = 37;
-const right = 39;
+//mouvement selon la touche
+const up = "ArrowUp";
+const down = "ArrowDown";
+const left = "ArrowLeft";
+const right = "ArrowRight";
 
 //taille du serpent pour une partie (c'est un carré)
 const tailleSerpent = 50;
@@ -62,11 +62,10 @@ const move = () => {
     Snake.x += userInputX;
     Snake.y += userInputY;
 
-    //dessine le serpent
     frame = 0;
   } 
   //dessine
-  Draw();
+  draw();
   drawApple();
   document.getElementById('score').innerHTML = score
 
@@ -76,7 +75,7 @@ const move = () => {
 setInterval(move, 1);
 
 //dessine le serpent
-function Draw(){
+function draw(){
   ctx.fillStyle = couleurSnake;
   Snake.part.forEach((element) => {
     ctx.fillRect(element.getX(), element.getY(), tailleSerpent, tailleSerpent)
@@ -91,22 +90,23 @@ function mouvementSnake(x, y){
 
 //recupère l'input du user
 window.addEventListener("keydown", (event) => {
-  if (event.keyCode == up && userInputY != 1*tailleSerpent)
+  console.log(event.key);
+  if (event.key == up && userInputY != 1*tailleSerpent)
   {
     userInputY = -1*tailleSerpent;
     userInputX = 0;
   }
-  else if (event.keyCode == down && userInputY != -1*tailleSerpent)
+  else if (event.key == down && userInputY != -1*tailleSerpent)
   {
     userInputY = 1*tailleSerpent;
     userInputX = 0;
   }
-  else if (event.keyCode == left && userInputX != 1*tailleSerpent)
+  else if (event.key == left && userInputX != 1*tailleSerpent)
   {
     userInputX = -1*tailleSerpent;
     userInputY = 0;
   }
-  else if (event.keyCode == right && userInputX != -1*tailleSerpent)
+  else if (event.key == right && userInputX != -1*tailleSerpent)
   {
     userInputX = 1*tailleSerpent;
     userInputY = 0;
