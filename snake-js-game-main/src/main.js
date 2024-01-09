@@ -51,7 +51,7 @@ const move = () => {
   ctx.fillRect(0, 0, 800, 800);
   
   //va bouger le serpent
-  if (frame == 30){
+  if (frame == 10){
     //s'il meurt
     death();
 
